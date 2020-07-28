@@ -37,7 +37,7 @@ namespace segment_tree
             int n;
 
             void treeConstruction(const std::vector<T>& values, int cur, int left, int right) {
-                int mid = (left + right) / 2;
+                int mid = getMidIdx(left, right);
 
                 if (left == right) {
                     tree[cur] = values[left];
@@ -51,7 +51,7 @@ namespace segment_tree
             }
 
             T queryHelper(int cur, int left, int right, int qleft, int qright) {
-                int mid = (left + right) / 2;
+                int mid = getMidIdx(left, right);
 
                 if (qleft <= left && qright >= right)
                     return tree[cur];
@@ -61,6 +61,10 @@ namespace segment_tree
                 
                 return func(queryHelper(2 * cur + 1, left, mid, qleft, qright),
                     queryHelper(2 * cur + 2, mid + 1, right, qleft, qright));
+            }
+
+            int getMidIdx(int l, int r) {
+                return l + (r - l) / 2;
             }
     };
 }
